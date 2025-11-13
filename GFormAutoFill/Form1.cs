@@ -6,6 +6,8 @@ namespace GFormAutoFill
 {
     public partial class Form1 : Form
     {
+        string URL = "https://docs.google.com/forms/d/e/1FAIpQLSe1TuIpQiLMVg_JVTzPraOB2SYTKoUmXi6eQc3hxjNPcaprRw/viewform";
+        int delay = 500;
         public Form1()
         {
             InitializeComponent();
@@ -15,7 +17,7 @@ namespace GFormAutoFill
         {
             // Mở Chrome
             IWebDriver driver = new ChromeDriver();
-            driver.Navigate().GoToUrl("https://docs.google.com/forms/d/e/1FAIpQLSduRG2Nlfb5AL5YTyolq7DaWv9kfg5ia911ywyjXlSVy52JIA/viewform");
+            driver.Navigate().GoToUrl(URL);
 
             // Tạo WebDriverWait
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
@@ -27,31 +29,32 @@ namespace GFormAutoFill
                 var elements = d.FindElements(By.XPath("//input[contains(@class,'whsOnd zHQkBf')]"));
                 return elements.Count > 0 ? elements : null;
             });
-
+            Thread.Sleep(delay); // Chờ thêm 1 chút để đảm bảo trang đã sẵn sàng
             if (inputs.Count >= 2)
             {
                 inputs[0].SendKeys("your_name_here");
                 inputs[1].SendKeys("6300630012");
             }
 
-            // --- Chọn giá trị trong dropdown ---
-            // Click vào dropdown để mở danh sách
-            IWebElement dropdown = wait.Until(d =>
-                d.FindElement(By.XPath("//div[@role='listbox']"))
+            Thread.Sleep(delay); // Chờ thêm 1 chút để đảm bảo trang đã sẵn sàng
+            // Xã phường
+            IWebElement xaphuong = wait.Until(d =>
+                d.FindElement(By.XPath("//div[@role='listbox' and contains(@class, 'jgvuAb')]"))
             );
-            dropdown.Click();
+            xaphuong.Click();
 
-            // Chờ và chọn option "Thành phố Cần Thơ"
-            IWebElement option = wait.Until(d =>
-                d.FindElement(By.XPath("//div[contains(@class,'MocG8c') and @role='option']//span[text()='Thành phố Cần Thơ']"))
+            Thread.Sleep(delay);
+            // Chờ và chọn option "xã Châu Thành"
+            IWebElement xaChauThanh = wait.Until(d =>
+                d.FindElement(By.XPath("//div[contains(@class,'MocG8c') and @role='option']//span[text()='Xã Châu Thành']"))
             );
-            option.Click();
+            xaChauThanh.Click();
 
             // --- Click nút "Tiếp" ---
-            IWebElement btnNext = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(
-                By.XPath("//div[contains(@class, 'uArJ5e') and .//span[text()='Tiếp']]")
-            ));
-            btnNext.Click();
+            //IWebElement btnNext = wait.Until(SeleniumExtras.WaitHelpers.ExpectedConditions.ElementToBeClickable(
+            //    By.XPath("//div[contains(@class, 'uArJ5e') and .//span[text()='Tiếp']]")
+            //));
+            //btnNext.Click();
         }
     }
 }
