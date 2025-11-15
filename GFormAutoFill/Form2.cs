@@ -16,5 +16,10 @@ namespace GFormAutoFill
         {
             InitializeComponent();
         }
+
+        private void Form2_Load(object sender, EventArgs e)
+        {
+            this.TopMost = true;
+        }
     }
 }

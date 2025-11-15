@@ -31,7 +31,7 @@ namespace GFormAutoFill
             WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(20));
 
             // Đọc dữ liệu từ file Excel
-            var data = ReadExcelToArray(@"D:\C#\mst.xlsx");
+            var data = ReadExcelToArray(textBox1.Text);
             foreach (var row in data)
             {
                 //richTextBox1.AppendText(string.Join(" | ", row) + Environment.NewLine);

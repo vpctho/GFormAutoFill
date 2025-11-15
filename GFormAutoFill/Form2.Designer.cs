@@ -62,6 +62,7 @@
             FormBorderStyle = FormBorderStyle.FixedSingle;
             Name = "Form2";
             Text = "Lưu ý";
+            Load += Form2_Load;
             ResumeLayout(false);
         }
 
